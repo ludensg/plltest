@@ -1,0 +1,44 @@
+(tf_env) gandelman@ns31:~/experiments/plltest (bash)$ python ps_server.py
+2023-09-28 13:26:06.378287: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/rh/devtoolset-9/root/usr/lib64:/opt/rh/devtoolset-9/root/usr/lib:/opt/rh/devtoolset-9/root/usr/lib64/dyninst:/opt/rh/devtoolset-9/root/usr/lib/dyninst:/opt/rh/devtoolset-9/root/usr/lib64:/opt/rh/devtoolset-9/root/usr/lib
+2023-09-28 13:26:06.378331: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+Starting Parameter Server...
+2023-09-28 13:26:08.464264: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2023-09-28 13:26:08.469152: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/rh/devtoolset-9/root/usr/lib64:/opt/rh/devtoolset-9/root/usr/lib:/opt/rh/devtoolset-9/root/usr/lib64/dyninst:/opt/rh/devtoolset-9/root/usr/lib/dyninst:/opt/rh/devtoolset-9/root/usr/lib64:/opt/rh/devtoolset-9/root/usr/lib
+2023-09-28 13:26:08.469194: W tensorflow/stream_executor/cuda/cuda_driver.cc:269] failed call to cuInit: UNKNOWN ERROR (303)
+2023-09-28 13:26:08.469219: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (ns31): /proc/driver/nvidia/version does not exist
+2023-09-28 13:26:08.485321: F tensorflow/core/platform/default/env.cc:73] Check failed: ret == 0 (11 vs. 0)Thread GrpcWorkerEnvPool creation via pthread_create() failed.
+Aborted
+(tf_env) gandelman@ns31:~/experiments/plltest (bash)$ ulimit -u
+4096
+(tf_env) gandelman@ns31:~/experiments/plltest (bash)$ ulimit -n
+1024
+(tf_env) gandelman@ns31:~/experiments/plltest (bash)$ cat /proc/sys/fs/file-max
+19462852
+(tf_env) gandelman@ns31:~/experiments/plltest (bash)$ ulimit -n 65536
+-bash: ulimit: open files: cannot modify limit: Operation not permitted
+(tf_env) gandelman@ns31:~/experiments/plltest (bash)$ export GRPC_DEFAULT_ALGORITHM=round_robin
+(tf_env) gandelman@ns31:~/experiments/plltest (bash)$ python ps_server.py
+2023-09-28 13:30:11.321723: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/rh/devtoolset-9/root/usr/lib64:/opt/rh/devtoolset-9/root/usr/lib:/opt/rh/devtoolset-9/root/usr/lib64/dyninst:/opt/rh/devtoolset-9/root/usr/lib/dyninst:/opt/rh/devtoolset-9/root/usr/lib64:/opt/rh/devtoolset-9/root/usr/lib
+2023-09-28 13:30:11.321772: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2023-09-28 13:30:13.614625: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2023-09-28 13:30:13.615968: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/rh/devtoolset-9/root/usr/lib64:/opt/rh/devtoolset-9/root/usr/lib:/opt/rh/devtoolset-9/root/usr/lib64/dyninst:/opt/rh/devtoolset-9/root/usr/lib/dyninst:/opt/rh/devtoolset-9/root/usr/lib64:/opt/rh/devtoolset-9/root/usr/lib
+2023-09-28 13:30:13.616022: W tensorflow/stream_executor/cuda/cuda_driver.cc:269] failed call to cuInit: UNKNOWN ERROR (303)
+2023-09-28 13:30:13.616066: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (ns31): /proc/driver/nvidia/version does not exist
+Starting Parameter Server...
+2023-09-28 13:30:13.639699: I tensorflow/core/distributed_runtime/rpc/grpc_channel.cc:272] Initialize GrpcChannelCache for job ps -> {0 -> ns31:2222}
+2023-09-28 13:30:13.639750: I tensorflow/core/distributed_runtime/rpc/grpc_channel.cc:272] Initialize GrpcChannelCache for job worker -> {0 -> inv01:2222, 1 -> inv02:2222}
+2023-09-28 13:30:13.642368: F tensorflow/core/platform/default/env.cc:73] Check failed: ret == 0 (11 vs. 0)Thread tf_Compute creation via pthread_create() failed.
+Aborted
+(tf_env) gandelman@ns31:~/experiments/plltest (bash)$ dmesg | tail
+[   23.058564] 8021q: adding VLAN 0 to HW filter on device eno1
+[   23.123741] FS-Cache: Loaded
+[   23.153805] FS-Cache: Netfs 'nfs' registered for caching
+[   60.457516] IPv6: ADDRCONF(NETDEV_CHANGE): ib0: link becomes ready
+[538272.066561] perf: interrupt took too long (2508 > 2500), lowering kernel.perf_event_max_sample_rate to 79000
+[691502.832648] perf: interrupt took too long (3139 > 3135), lowering kernel.perf_event_max_sample_rate to 63000
+[1017730.013893] perf: interrupt took too long (3930 > 3923), lowering kernel.perf_event_max_sample_rate to 50000
+[1072768.876486] perf: interrupt took too long (4931 > 4912), lowering kernel.perf_event_max_sample_rate to 40000
+[1212733.974311] perf: interrupt took too long (6169 > 6163), lowering kernel.perf_event_max_sample_rate to 32000
+[11220324.421271] perf: interrupt took too long (7720 > 7711), lowering kernel.perf_event_max_sample_rate to 25000
